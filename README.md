@@ -249,12 +249,12 @@ The following GitHub repository secrets must be added in support of the GitHub A
 
 - DFX_IDENTITY_PEM_ENCODED
 
-  base64 encoded value of the file `~/.config/dfx/identitydefault/identity.pem`:
+  base64 encoded value of the file `~/.config/dfx/identity/default/identity.pem`:
 
   Encode into a single line with the command:
 
   ```bash
-  base64 -w 0 ~/.config/dfx/identitydefault/identity.pem
+  base64 -w 0 ~/.config/dfx/identity/default/identity.pem
   ```
 
 - DFX_WALLET_CANISTER_ID

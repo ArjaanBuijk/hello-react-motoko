@@ -1,0 +1,158 @@
+name: hello-react-motoko cicd
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/**'
+      - '.github/trigger.txt'
+      - '.github/workflows/cicd.yml'
+      - './*.json'
+      - './*.js'
+      - './Makefile'
+
+jobs:
+  params:
+    name: params
+    runs-on: ubuntu-latest
+    outputs:
+      git_branch: ${{ steps.do.outputs.git_branch }}
+      do_deploy_to_prod: ${{ steps.do.outputs.do_deploy_to_prod }}
+      changed_files: ${{ steps.do.outputs.changed_files }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: do
+        id: do
+        run: |
+          github_event_name=$(echo ${GITHUB_EVENT_NAME})
+          echo "github_event_name: $github_event_name"
+
+          git_branch=$(echo ${GITHUB_REF##*/})
+          echo "git_branch: $git_branch"
+          echo "::set-output name=git_branch::$git_branch"
+
+          if [[ $git_branch == "main" ]]
+          then
+            echo "::set-output name=do_deploy_to_prod::true"
+          else
+            echo "::set-output name=do_deploy_to_prod::false"
+          fi
+
+          # NOTE: Do not use ${{ github.event.before }}, because it has no value when pushing to a new branch or during a force-push
+          #       https://github.community/t/can-i-process-only-changed-files-with-github-actions/137814
+          first_parent_commit=$(git log --first-parent --max-count=1 --skip=1 --oneline | awk '{print $1;}')
+          changed_files=$(git diff --name-only ${first_parent_commit}..${{ github.event.after }} | tr  '\r\n' ' ')
+          echo "changed_files: $changed_files"
+          echo "::set-output name=changed_files::$changed_files"
+
+  summary:
+    name: summary
+    runs-on: ubuntu-latest
+    needs: [params]
+    steps:
+      - name: summary
+        run: |
+          echo git_branch: ${{ needs.params.outputs.git_branch }}
+          echo do_deploy_to_prod: ${{ needs.params.outputs.do_deploy_to_prod }}
+          echo changed_files: ${{ needs.params.outputs.changed_files }}
+
+      - name: versions
+        run: |
+          echo "npm version : $(npm --version)"
+          echo "node version: $(node --version)"
+
+    #  - name: GitHub context
+    #    env:
+    #      GITHUB_CONTEXT: ${{ toJSON(github) }}
+    #    run: |
+    #      echo "------------------------------------"
+    #      echo GitHub Context:
+    #      echo "$GITHUB_CONTEXT"
+    #      echo "------------------------------------"
+    #      exit 1
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    needs: [params, summary]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: install
+        env:
+          GITHUB_PAT_FOR_DRACULA_UI: ${{ secrets.PERSONAL_ACCESS_TOKEN_TO_INSTALL_DRACULA_UI }}
+        run: |
+          echo "Installing dependencies"
+          make wabt-install
+          make javascript-install
+          make python-install
+
+      - name: versions
+        run: |
+          echo "wasm2wat version: $(wasm2wat --version)"
+          echo "npm version    : $(npm --version)"
+          echo "node version   : $(node --version)"
+          echo "pip version    : $(pip --version)"
+          echo "python version : $(python --version)"
+
+      - name: all-static-check
+        run: |
+          make all-static-check
+
+  deploy_to_ic:
+    name: deploy_to_ic
+    runs-on: ubuntu-latest
+    needs: [params, test]
+    if: ${{ needs.params.outputs.do_deploy_to_prod  == 'true' }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: install
+        env:
+          GITHUB_PAT_FOR_DRACULA_UI: ${{ secrets.PERSONAL_ACCESS_TOKEN_TO_INSTALL_DRACULA_UI }}
+        run: |
+          echo "Installing dfx"
+          make dfx-install
+
+          echo "Adding ~/bin to PATH"
+          source ~/.profile
+
+          echo "Installing dependencies"
+          make wabt-install
+          make javascript-install
+          make python-install
+
+      - name: versions
+        run: |
+          echo "wasm2wat version: $(wasm2wat --version)"
+          echo "npm version    : $(npm --version)"
+          echo "node version   : $(node --version)"
+          echo "pip version    : $(pip --version)"
+          echo "python version : $(python --version)"
+          echo "dfx version    : $(dfx --version)"
+
+      - name: dfx identity and wallet
+        env:
+          DFX_IDENTITY_PEM_ENCODED: ${{ secrets.DFX_IDENTITY_PEM_ENCODED }}
+          DFX_WALLET_CANISTER_ID: ${{ secrets.DFX_WALLET_CANISTER_ID }}
+        run: |
+          make dfx-identity-and-wallet-for-cicd
+
+      - name: deploy
+        run: |
+          make dfx-deploy-ic
+
+      - name: smoketest
+        run: |
+          echo "To do"
