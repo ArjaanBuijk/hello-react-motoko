@@ -18,11 +18,17 @@ export function About() {
               Version: {commitData.sha}
             </Text>
           </Card>
-          <Card variant="subtle" color="red" m="md" p="md" display="inline-block">
-          <Text color="red" size="md">
-            Core project of the motoko bootcamp, March 2022.
-          </Text>
-        </Card>
+          <Card
+            variant="subtle"
+            color="red"
+            m="md"
+            p="md"
+            display="inline-block"
+          >
+            <Text color="red" size="md">
+              Core project of the motoko bootcamp, March 2022.
+            </Text>
+          </Card>
         </div>
       </main>
     </div>

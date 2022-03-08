@@ -78,7 +78,10 @@ export function LogInWithInternetIdentity({ setAuthClient }) {
             <i>Don't have an Internet Identity?</i>
           </Text>
           <br />
-          <Anchor href="https://smartcontracts.org/docs/ic-identity-guide/auth-how-to.html#_create_an_identity_anchor" color="cyan">
+          <Anchor
+            href="https://smartcontracts.org/docs/ic-identity-guide/auth-how-to.html#_create_an_identity_anchor"
+            color="cyan"
+          >
             <i>Create an Identity Anchor.</i>
           </Anchor>
         </Box>
