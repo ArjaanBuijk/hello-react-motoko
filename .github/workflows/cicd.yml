@@ -1,4 +1,4 @@
-name: hello-react-motoko cicd
+name: motoko-bootcamp-nft-minter cicd
 
 on:
   workflow_dispatch:
