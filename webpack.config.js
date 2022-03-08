@@ -183,6 +183,10 @@ module.exports = (env = {}, args = {}) => {
             from: path.join(__dirname, 'src', 'frontend/assets/favicon'),
             to: path.join(__dirname, 'dist', 'frontend'),
           },
+          {
+            from: path.join(__dirname, 'src', 'frontend/assets/dfinity'),
+            to: path.join(__dirname, 'dist', 'frontend'),
+          },
         ],
       }),
       new webpack.EnvironmentPlugin({

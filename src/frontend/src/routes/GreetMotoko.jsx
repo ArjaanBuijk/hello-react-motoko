@@ -12,7 +12,7 @@ export function GreetMotoko() {
         <title>GreetMotoko</title>
       </Helmet>
       <main>
-        <div className="container-fluid">
+        <div className="container-fluid text-center">
           <Card color="blackSecondary" my="lg" p="lg" display="inline-block">
             <Box my="sm" py="sm">
               <Heading color="yellow" size="xl">

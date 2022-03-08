@@ -6,10 +6,10 @@ import { Card, Text } from '@dracula/dracula-ui'
 export function StagingBanner() {
   return (
     <main>
-      <div className="container-fluid">
+      <div className="container-fluid text-center">
         <Card variant="subtle" color="red" m="md" p="md" display="inline-block">
           <Text color="red" size="md">
-            This dApp is for my own educational purposes only!
+            Core project of the motoko bootcamp, March 2022.
           </Text>
         </Card>
       </div>

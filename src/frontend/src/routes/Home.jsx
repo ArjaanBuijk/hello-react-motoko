@@ -11,10 +11,10 @@ export function Home() {
         <title>Home</title>
       </Helmet>
       <main>
-        <div className="container-fluid">
+        <div className="container-fluid text-center">
           <Card color="animated" my="lg" p="lg" display="inline-block">
             <Heading color="black" size="xl">
-              Welcome to my React + Motoko playground...
+              Welcome to my NFT Minter!
             </Heading>
           </Card>
         </div>

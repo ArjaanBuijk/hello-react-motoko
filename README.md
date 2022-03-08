@@ -11,13 +11,6 @@ Development & CI/CD (GitHub Actions) is done on Ubuntu 20.04.
 
 # Setup
 
-## Git
-
-```bash
-git clone <this repo>
-cd motoko-bootcamp-nft-minter
-```
-
 ## Conda
 
 [Download MiniConda](https://docs.conda.io/en/latest/miniconda.html#linux-installers) and then install it:
@@ -44,6 +37,27 @@ node --version
 pip --version
 python --version
 ```
+
+## Git
+
+```bash
+git clone <this repo>
+cd motoko-bootcamp-nft-minter
+```
+
+## pre-commit
+
+Create this pre-commit script,  file `.git/hooks/pre-commit`
+
+```bash
+#!/bin/bash
+
+# Apply all static auto-formatting & perform the static checks
+export PATH="$HOME/miniconda3/envs/bootcamp/bin:$PATH"
+/usr/bin/make all-static
+```
+
+
 
 ## Python
 
