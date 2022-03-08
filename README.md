@@ -1,6 +1,9 @@
-# hello-react-motoko
+# motoko-bootcamp-nft-minter
 
-A bootstrap React + Motoko example, using dracula UI styling
+My submission for the [core project of the Motoko Bootcamp](https://github.com/motoko-bootcamp/bootcamp/blob/main/core_project/PROJECT.MD), March 2022.
+
+- A bootstrap React + Motoko example
+- Using dracula UI for styling
 
 # Ubuntu
 
@@ -12,7 +15,7 @@ Development & CI/CD (GitHub Actions) is done on Ubuntu 20.04.
 
 ```bash
 git clone <this repo>
-cd hello-react-motoko
+cd motoko-bootcamp-nft-minter
 ```
 
 ## Conda
@@ -26,8 +29,8 @@ bash Miniconda3-xxxxx.sh
 Create a conda environment with NodeJS & Python:
 
 ```bash
-conda create --name hello-react-motoko nodejs python=3.9
-conda activate hello-react-motoko
+conda create --name bootcamp nodejs python=3.9
+conda activate bootcamp
 
 # Make sure these are within the conda environment
 which npm
@@ -45,7 +48,7 @@ python --version
 ## Python
 
 ```bash
-conda activate hello-react-motoko
+conda activate bootcamp
 
 make python-install
 ```
@@ -66,7 +69,7 @@ All styling is done using Dracula UI, for which you must [buy a licence](https:/
 - Run this script to install dracula UI and the other npm packages into the project:
 
   ```bash
-  conda activate hello-react-motoko
+  conda activate bootcamp
   
   make javascript-install
   
@@ -85,7 +88,9 @@ source ~/.profile
 dfx --version
 ```
 
-## VS Code Extensions
+## VS Code 
+
+### Extensions
 
 Install these extensions:
 
@@ -93,6 +98,10 @@ Install these extensions:
 - Formatting Toggle, by tombonnike
 - Prettier - Code formatter, by Prettier
 - ESLint, by Microsoft
+
+### Configure for React debugging
+
+[docs](https://code.visualstudio.com/docs/nodejs/reactjs-tutorial#_configure-the-debugger)
 
 # Development
 
@@ -140,24 +149,26 @@ Install these extensions:
 ## Deploy to local network
 
 ```bash
-cd hello-react-motoko
+cd motoko-bootcamp-nft-minter
 
 # Activate the conda environment
-conda activate hello-react-motoko
+conda activate bootcamp
 
 # Start a local network
 make dfx-local-network-start
 
 # Deploy the canisters
-conda activate hello-react-motoko
+conda activate bootcamp
 make dfx-deploy-local
 
 # To develop the frontend, start a development server, with hot reloading
 # - It does NOT clean out `dist` folder, so sometimes you might need to re-build
 npm run start
+#--> in VS Code, set breakpoints & (CTRL+Shift+P) Debug: Open Link
 
 # To develop the Motoko backend, after each change,re-do the canister deployment
 make dfx-deploy-local
+#--> Not possible to debug in VS Code or browser... Use print statements.
 
 # To stop the local network
 make dfx-local-network-stop
@@ -182,8 +193,6 @@ $ make dfx-canisters-of-project
 Click on the link you want to test in the browser:
 
 - \_\_Candid_UI of canisterMotoko: to test the public API of the backend
-
-  
 
 # Deploy to IC
 

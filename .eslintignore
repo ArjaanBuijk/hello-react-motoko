@@ -9,7 +9,11 @@ package.json
 
 # Ignore artifacts:
 dist
+build*
 .dfx
 src/declarations
 .mypy_cache
 scripts/.mypy_cache
+
+# Ignore submodules
+src/git-submodules
