@@ -128,7 +128,7 @@ function TogglerNavLinks() {
                   }
                 }}
               >
-                About hello-react-motoko
+                About NFT Minter
               </NavLink>
             </Box>
           </Box>
@@ -152,7 +152,7 @@ function StaticNavLinks() {
           }
         }}
       >
-        hello-react-motoko
+        NFT Minter
       </NavLink>
     </Box>
   )
