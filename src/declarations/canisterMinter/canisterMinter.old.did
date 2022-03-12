@@ -1,0 +1,20 @@
+type TokenId = nat;
+type Result = 
+ variant {
+   err: text;
+   ok: TokenId;
+ };
+service : {
+  approve: (principal, TokenId) -> ();
+  balanceOf: (principal) -> (opt nat) query;
+  doIOwn: (nat) -> (bool) query;
+  getApproved: (TokenId) -> (opt principal);
+  isApprovedForAll: (principal, principal) -> (bool);
+  mint: (text) -> (Result);
+  name: () -> (text) query;
+  ownerOf: (TokenId) -> (opt principal) query;
+  setApprovalForAll: (principal, bool) -> () oneway;
+  symbol: () -> (text) query;
+  tokenURI: (TokenId) -> (opt text) query;
+  transferFrom: (principal, principal, TokenId) -> () oneway;
+}

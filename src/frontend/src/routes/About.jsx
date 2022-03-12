@@ -12,7 +12,7 @@ export function About() {
         <title>About</title>
       </Helmet>
       <main>
-        <div className="container-fluid">
+        <div className="container-fluid text-center">
           <Card color="blackSecondary" my="lg" p="lg" display="inline-block">
             <Text color="white" size="sm">
               Version: {commitData.sha}

@@ -11,9 +11,40 @@ COMMIT_JSON := "src/frontend/assets/deploy-info/commit.json"
 
 GIT_BRANCH_NAME := $(shell git branch --show-current)
 
+# For dip721-  calls
+DIP721_CANISTER_DIR := src/backend/minter
+DIP721_CANISTER_NAME := canisterMinter
+TOKEN_ID := 1
+PRINCIPAL := g4arn-6gm5z-j6hki-v5hqq-tlxcm-uzori-tp7lm-o5pp5-lorz4-4vhk4-jae
+OWNER := $(PRINCIPAL)
+OP := $(PRINCIPAL)
+APPROVED := false
+
+# Canister
+CANISTER_DIR := $(DIP721_CANISTER_DIR)
+CANISTER_NAME := $(DIP721_CANISTER_NAME)
+
+# Call a canister method with dfx-canister-call
+CANISTER_METHOD := ownerOf
+CANISTER_ARGUMENT := (1)
+CANISTER_OUTPUT := pp
+CANISTER_INPUT := idl
+
 help:
-	@echo "Example command:"
+	@echo "Example commands:"
+	@echo " make dip721-balanceOf PRINCIPAL=xxxx-...."
+	@echo " make dip721-ownerOf TOKEN_ID=1"
+	@echo " make dip721-tokenURI TOKEN_ID=1"
+	@echo " make dip721-name"
+	@echo " make dip721-symbol"
+	@echo " make dip721-isApprovedForAll OWNER=xxxx-.... OP=yyyy-...."
+	@echo " make dip721-getApproved TOKEN_ID=1"
+	@echo " make dip721-setApprovalForAll OP=yyyy-.... APPROVED=true"
 	@echo "	make dfx-canisters-of-project NETWORK=ic"
+
+.PHONY: all-clean
+all-clean: \
+	dfx-clean python-clean
 
 .PHONY: all-static
 all-static: \
@@ -25,6 +56,49 @@ all-static-check: \
 	python-format-check python-lint-check python-type-check \
 	javascript-format-check javascript-lint-check
 
+.PHONY: dip721-balanceOf
+dip721-balanceOf:
+	@$(MAKE) --no-print-directory dfx-canister-call  CANISTER_METHOD=balanceOf CANISTER_ARGUMENT=\(principal\ \"$(PRINCIPAL)\"\)
+
+.PHONY: dip721-ownerOf
+dip721-ownerOf:
+	@$(MAKE) --no-print-directory dfx-canister-call  CANISTER_METHOD=ownerOf CANISTER_ARGUMENT=\($(TOKEN_ID)\)
+
+.PHONY: dip721-tokenURI
+dip721-tokenURI:
+	@$(MAKE) --no-print-directory dfx-canister-call  CANISTER_METHOD=tokenURI CANISTER_ARGUMENT=\($(TOKEN_ID)\)
+
+.PHONY: dip721-name
+dip721-name:
+	@$(MAKE) --no-print-directory dfx-canister-call  CANISTER_METHOD=name CANISTER_ARGUMENT=\(\)
+
+.PHONY: dip721-symbol
+dip721-symbol:
+	@$(MAKE) --no-print-directory dfx-canister-call  CANISTER_METHOD=symbol CANISTER_ARGUMENT=\(\)
+
+.PHONY: dip721-isApprovedForAll
+dip721-isApprovedForAll:
+	@$(MAKE) --no-print-directory dfx-canister-call  CANISTER_METHOD=isApprovedForAll CANISTER_ARGUMENT=\(principal\ \"$(OWNER)\",\ principal\ \"$(OP)\"\)
+
+.PHONY: dip721-getApproved
+dip721-getApproved:
+	@$(MAKE) --no-print-directory dfx-canister-call  CANISTER_METHOD=getApproved CANISTER_ARGUMENT=\($(TOKEN_ID)\)
+
+.PHONY: dip721-setApprovalForAll
+dip721-setApprovalForAll:
+	@$(MAKE) --no-print-directory dfx-canister-call  CANISTER_METHOD=setApprovalForAll CANISTER_ARGUMENT=\(principal\ \"$(OP)\",\ $(APPROVED)\)
+
+
+.PHONY: dfx-canister-call
+dfx-canister-call:
+	@dfx canister --network $(NETWORK) call --output $(CANISTER_OUTPUT) --type $(CANISTER_INPUT) $(CANISTER_NAME) $(CANISTER_METHOD) '$(CANISTER_ARGUMENT)'
+
+
+.PHONY: dfx-clean
+dfx-clean:
+	rm -rf .dfx
+	rm -rf dist 
+	rm -rf src/declarations
 
 # This installs ~/bin/dfx
 # Make sure to source ~/.profile afterwards -> it adds ~/bin to the path if it exists
@@ -36,6 +110,7 @@ dfx-install:
 dfx-canisters-of-project-ic:
 	@$(eval CANISTER_WALLET := $(shell dfx identity --network ic get-wallet))
 	@$(eval CANISTER_MOTOKO := $(shell dfx canister --network ic id canisterMotoko))
+	@$(eval CANISTER_MINTER := $(shell dfx canister --network ic id canisterMinter))
 	@$(eval CANISTER_FRONTEND := $(shell dfx canister --network ic id canisterFrontend))
 
 	@echo '-------------------------------------------------'
@@ -43,12 +118,14 @@ dfx-canisters-of-project-ic:
 	@echo "cycles canister    : $(CANISTER_WALLET)"
 	@echo "Candid UI canister : $(CANISTER_CANDID_UI_IC)"
 	@echo "canisterMotoko     : $(CANISTER_MOTOKO)"
+	@echo "canisterMinter     : $(CANISTER_MINTER)"
 	@echo "canisterFrontend   : $(CANISTER_FRONTEND)"
 	@echo '-------------------------------------------------'
 	@echo 'View in browser at:'
 	@echo  "cycles canister               : https://$(CANISTER_WALLET).raw.ic0.app/"
 	@echo  "Candid UI                     : https://$(CANISTER_CANDID_UI_IC).raw.ic0.app/"
 	@echo  "Candid UI of canisterMotoko   : https://$(CANISTER_CANDID_UI_IC).raw.ic0.app/?id=$(CANISTER_MOTOKO)"
+	@echo  "Candid UI of canisterMinter   : https://$(CANISTER_CANDID_UI_IC).raw.ic0.app/?id=$(CANISTER_MINTER)"
 	@echo  "Candid UI of canisterFrontend : https://$(CANISTER_CANDID_UI_IC).raw.ic0.app/?id=$(CANISTER_FRONTEND)"
 	@echo  "canisterFrontend              : https://$(CANISTER_FRONTEND).ic0.app/"
 
@@ -57,6 +134,7 @@ dfx-canisters-of-project-local:
 	@$(eval CANISTER_WALLET := $(shell dfx identity get-wallet))
 	@$(eval CANISTER_CANDID_UI_LOCAL := $(shell dfx canister id __Candid_UI))
 	@$(eval CANISTER_MOTOKO := $(shell dfx canister id canisterMotoko))
+	@$(eval CANISTER_MINTER := $(shell dfx canister id canisterMinter))
 	@$(eval CANISTER_FRONTEND := $(shell dfx canister id canisterFrontend))
 
 	
@@ -65,12 +143,14 @@ dfx-canisters-of-project-local:
 	@echo "cycles canister    : $(CANISTER_WALLET)"
 	@echo "Candid UI canister : $(CANISTER_CANDID_UI_LOCAL)"
 	@echo "canisterMotoko     : $(CANISTER_MOTOKO)"
+	@echo "canisterMinter     : $(CANISTER_MINTER)"
 	@echo "canisterFrontend   : $(CANISTER_FRONTEND)"
 	@echo '-------------------------------------------------'
 	@echo 'View in browser at:'
 	@echo  "cycles canister               : ?? http://localhost:8000?canisterId=$(CANISTER_WALLET) ?? "
 	@echo  "__Candid_UI                   : http://localhost:8000?canisterId=$(CANISTER_CANDID_UI_LOCAL)"
 	@echo  "Candid UI of canisterMotoko   : http://localhost:8000?canisterId=$(CANISTER_CANDID_UI_LOCAL)&id=$(CANISTER_MOTOKO)"
+	@echo  "Candid UI of canisterMinter   : http://localhost:8000?canisterId=$(CANISTER_CANDID_UI_LOCAL)&id=$(CANISTER_MINTER)"
 	@echo  "Candid UI of canisterFrontend : http://localhost:8000?canisterId=$(CANISTER_CANDID_UI_LOCAL)&id=$(CANISTER_FRONTEND)"
 	@echo  "canisterFrontend              : http://localhost:8000?canisterId=$(CANISTER_FRONTEND)"
 

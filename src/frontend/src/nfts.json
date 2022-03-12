@@ -1,0 +1,184 @@
+[
+  {
+    "id": 1,
+    "name": "Battery 1",
+    "picture": "battery_1.png",
+    "collection": "Battery Artwork",
+    "artist": "Motoko Bootcamp 1"
+  },
+  {
+    "id": 2,
+    "name": "Battery 2",
+    "picture": "battery_2.png",
+    "collection": "Battery Artwork",
+    "artist": "Motoko Bootcamp 1"
+  },
+  {
+    "id": 3,
+    "name": "Battery 3",
+    "picture": "battery_3.png",
+    "collection": "Battery Artwork",
+    "artist": "Motoko Bootcamp 1"
+  },
+  {
+    "id": 4,
+    "name": "Battery 4",
+    "picture": "battery_4.png",
+    "collection": "Battery Artwork",
+    "artist": "Motoko Bootcamp 1"
+  },
+  {
+    "id": 5,
+    "name": "Battery 5",
+    "picture": "battery_5.png",
+    "collection": "Battery Artwork",
+    "artist": "Motoko Bootcamp 1"
+  },
+  {
+    "id": 6,
+    "name": "Fish 0",
+    "picture": "fish_0.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 7,
+    "name": "Fish 1",
+    "picture": "fish_1.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 8,
+    "name": "Fish 2",
+    "picture": "fish_2.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 9,
+    "name": "Fish 3",
+    "picture": "fish_3.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 10,
+    "name": "Fish 4",
+    "picture": "fish_4.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 11,
+    "name": "Fish 5",
+    "picture": "fish_5.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 12,
+    "name": "Fish 6",
+    "picture": "fish_6.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 13,
+    "name": "Fish 7",
+    "picture": "fish_7.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 14,
+    "name": "Fish 8",
+    "picture": "fish_8.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 15,
+    "name": "Fish 9",
+    "picture": "fish_9.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 16,
+    "name": "Fish 10",
+    "picture": "fish_10.svg",
+    "collection": "Fish Artwork",
+    "artist": "Motoko Bootcamp 2"
+  },
+  {
+    "id": 17,
+    "name": "Nerd Developer 0",
+    "picture": "nerd_0.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 18,
+    "name": "Nerd Developer 1",
+    "picture": "nerd_1.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 19,
+    "name": "Nerd Developer 2",
+    "picture": "nerd_2.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 20,
+    "name": "Nerd Developer 3",
+    "picture": "nerd_3.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 21,
+    "name": "Nerd Developer 4",
+    "picture": "nerd_4.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 22,
+    "name": "Nerd Developer 5",
+    "picture": "nerd_5.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 23,
+    "name": "Nerd Developer 6",
+    "picture": "nerd_6.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 24,
+    "name": "Nerd Developer 7",
+    "picture": "nerd_7.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 25,
+    "name": "Nerd Developer 8",
+    "picture": "nerd_8.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  },
+  {
+    "id": 26,
+    "name": "Nerd Developer 9",
+    "picture": "nerd_9.svg",
+    "collection": "Nerd-Developer Artwork",
+    "artist": "Motoko Bootcamp 3"
+  }
+]

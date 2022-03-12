@@ -47,7 +47,7 @@ cd motoko-bootcamp-nft-minter
 
 ## pre-commit
 
-Create this pre-commit script,  file `.git/hooks/pre-commit`
+Create this pre-commit script, file `.git/hooks/pre-commit`
 
 ```bash
 #!/bin/bash
@@ -56,8 +56,6 @@ Create this pre-commit script,  file `.git/hooks/pre-commit`
 export PATH="$HOME/miniconda3/envs/bootcamp/bin:$PATH"
 /usr/bin/make all-static
 ```
-
-
 
 ## Python
 
@@ -102,7 +100,7 @@ source ~/.profile
 dfx --version
 ```
 
-## VS Code 
+## VS Code
 
 ### Extensions
 
@@ -160,7 +158,9 @@ Install these extensions:
   make javascript-lint-check
   ```
 
-## Deploy to local network
+## Deploy to local network, with local II
+
+### Start local network in minter project
 
 ```bash
 cd motoko-bootcamp-nft-minter
@@ -170,7 +170,25 @@ conda activate bootcamp
 
 # Start a local network
 make dfx-local-network-start
+```
 
+### Run Internet Identity local
+
+Once local network is up, make sure you have the [Internet Identity](https://github.com/dfinity/internet-identity) repo cloned locally, and deploy the Internet Identity canister to the local network:
+
+```bash
+cd ../internet-identity
+npm install
+
+rm -rf .dfx/local
+II_ENV=development II_DUMMY_AUTH=1 II_DUMMY_CAPTCHA=1 II_FETCH_ROOT_KEY=1 dfx deploy --no-wallet --argument '(null)'
+```
+
+### Run NFT Minter local
+
+Copy the canister ID fom the Internet Identity canister, and paste it into `webpack.config.js` in this project on the `LOCAL_II_CANISTER` variable on line `8`.
+
+```bash
 # Deploy the canisters
 conda activate bootcamp
 make dfx-deploy-local
@@ -185,8 +203,10 @@ make dfx-deploy-local
 #--> Not possible to debug in VS Code or browser... Use print statements.
 
 # To stop the local network
-make dfx-local-network-stop
+make dfx-local-network-stopnpm
 ```
+
+
 
 ## Test & Debug
 
@@ -206,7 +226,8 @@ $ make dfx-canisters-of-project
 
 Click on the link you want to test in the browser:
 
-- \_\_Candid_UI of canisterMotoko: to test the public API of the backend
+- \_\_Candid_UI of canisterMotoko: to test the public API of the Motoko backend
+- \_\_Candid_UI of canisterMinter: to test the public API of the Minter backend
 
 # Deploy to IC
 
@@ -259,7 +280,8 @@ $ make dfx-canisters-of-project-ic
 
 Click on the link you want to test in the browser. Most often, you want to check:
 
-- Candid UI of canisterMotoko: to test the public API of the backend
+- Candid UI of canisterMotoko: to test the public API of the Motoko backend
+- Candid UI of canisterMinter: to test the public API of the Minter backend
 - canisterFrontend : to test the application
 
 # Appendix A: GitHub

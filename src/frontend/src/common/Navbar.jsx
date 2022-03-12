@@ -22,11 +22,11 @@ function Nav() {
   return (
     <nav className="navbar fixed-top navbar-dark drac-bg-black">
       <Box className="container-fluid justify-content-start">
-        <Toggler />
+        {/* <Toggler /> */}
         <StaticNavLinks />
       </Box>
 
-      <TogglerNavLinks />
+      {/* <TogglerNavLinks /> */}
     </nav>
   )
 }

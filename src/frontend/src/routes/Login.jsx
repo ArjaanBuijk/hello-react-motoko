@@ -5,7 +5,7 @@ import '@dracula/dracula-ui/styles/dracula-ui.css'
 import { Box, Card, Heading, Text, Divider } from '@dracula/dracula-ui'
 import { LogInWithInternetIdentity } from './LoginWithInternetIdentity'
 
-export function Login({ setAuthClient, setToken }) {
+export function Login({ setAuthClient }) {
   return (
     <div>
       <Helmet>
@@ -28,6 +28,8 @@ export function Login({ setAuthClient, setToken }) {
             </Heading>
             <Divider></Divider>
             <LogInWithInternetIdentity setAuthClient={setAuthClient} />
+            <Divider></Divider>
+            <img src="motoko-bootcamp.png" />
           </Card>
         </div>
       </main>
