@@ -10,7 +10,11 @@ import { AuthClient } from '@dfinity/auth-client'
 
 // TODO: externalize II_URL in a .json
 //       Or based on isDevelopment flag in webpack.config.js, as done in IC-AVATAR
-const II_URL = 'https://identity.ic0.app/'
+// const II_URL = 'https://identity.ic0.app/'
+const II_URL =
+  process.env.DFX_NETWORK === 'ic'
+    ? 'https://identity.ic0.app/#authorize'
+    : process.env.LOCAL_II_CANISTER
 let authClient
 
 export function LogInWithInternetIdentity({ setAuthClient }) {
@@ -72,7 +76,7 @@ export function LogInWithInternetIdentity({ setAuthClient }) {
         </Button>
       </Card>
 
-      <Card variant="subtle" color="purple" p="md" m="md">
+      {/* <Card variant="subtle" color="purple" p="md" m="md">
         <Box>
           <Text color="white">
             <i>Don't have an Internet Identity?</i>
@@ -85,7 +89,7 @@ export function LogInWithInternetIdentity({ setAuthClient }) {
             <i>Create an Identity Anchor.</i>
           </Anchor>
         </Box>
-      </Card>
+      </Card> */}
     </Box>
   )
 }

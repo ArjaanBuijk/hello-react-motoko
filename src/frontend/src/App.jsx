@@ -3,25 +3,22 @@ import React from 'react'
 import { Head } from './common/Head'
 import { Footer } from './common/Footer'
 import { Navbar } from './common/Navbar'
-import { StagingBanner } from './common/StagingBanner'
 import { Outlet } from 'react-router-dom'
 import { Login } from './routes/Login'
 
 export function App() {
   // When authenticating with internet identity
   const [authClient, setAuthClient] = React.useState()
-  // When logging in with email & password
-  const [token, setToken] = React.useState()
 
-  if (!(authClient || token)) {
-    return <Login setAuthClient={setAuthClient} setToken={setToken} />
+  if (!authClient) {
+    return <Login setAuthClient={setAuthClient} />
   }
 
   return (
     <div>
       <Head />
       <Navbar />
-      <Outlet />
+      <Outlet context={[authClient, setAuthClient]} />
       <Footer />
     </div>
   )

@@ -4,8 +4,12 @@
       "main": "src/backend/motoko/main.mo",
       "type": "motoko"
     },
+    "canisterMinter": {
+      "main": "src/backend/minter/dip721.mo",
+      "type": "motoko"
+    },
     "canisterFrontend": {
-      "dependencies": ["canisterMotoko"],
+      "dependencies": ["canisterMotoko", "canisterMinter"],
       "frontend": {
         "entrypoint": "src/frontend/src/index.html"
       },

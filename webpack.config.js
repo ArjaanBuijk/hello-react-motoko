@@ -4,6 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
+// Replace this value with the ID of your local Internet Identity canister
+const LOCAL_II_CANISTER = 'http://rno2w-sqaaa-aaaaa-aaacq-cai.localhost:8000'
+
 function initCanisterEnv() {
   let localCanisters, prodCanisters
   try {
@@ -101,6 +104,11 @@ module.exports = (env = {}, args = {}) => {
           'src/declarations',
           'canisterMotoko'
         ),
+        DeclarationsCanisterMinter: path.resolve(
+          __dirname,
+          'src/declarations',
+          'canisterMinter'
+        ),
         DeclarationsCanisterFrontend: path.resolve(
           __dirname,
           'src/declarations',
@@ -187,10 +195,19 @@ module.exports = (env = {}, args = {}) => {
             from: path.join(__dirname, 'src', 'frontend/assets/dfinity'),
             to: path.join(__dirname, 'dist', 'frontend'),
           },
+          {
+            from: path.join(__dirname, 'src', 'frontend/assets/logo'),
+            to: path.join(__dirname, 'dist', 'frontend'),
+          },
+          {
+            from: path.join(__dirname, 'src', 'frontend/assets/nfts'),
+            to: path.join(__dirname, 'dist', 'frontend'),
+          },
         ],
       }),
       new webpack.EnvironmentPlugin({
         ...canisterEnvVariables,
+        LOCAL_II_CANISTER,
       }),
       new webpack.ProvidePlugin({
         Buffer: [require.resolve('buffer/'), 'Buffer'],
