@@ -2,6 +2,9 @@
   "canisterFrontend": {
     "ic": "mqabn-jqaaa-aaaai-abooq-cai"
   },
+  "canisterMinter": {
+    "ic": "ryv4o-rqaaa-aaaai-aby5q-cai"
+  },
   "canisterMotoko": {
     "ic": "m6cmf-saaaa-aaaai-abopq-cai"
   }
